@@ -26,3 +26,4 @@ module fpga_4lut (
   end
 
 endmodule
+
