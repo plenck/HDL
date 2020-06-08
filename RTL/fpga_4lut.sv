@@ -17,13 +17,12 @@ module fpga_4lut (
   //////////
   always_comb begin
     if (!reset_ni) begin
-      data <= '0;
+      data = '0;
     end else if (data_we_i) begin
-      data <= data_in_i;
+      data = data_in_i;
     end else begin
       out_o = data[in_i];
     end
   end
 
 endmodule
-
