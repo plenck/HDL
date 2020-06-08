@@ -8,7 +8,7 @@ module fpga_4lut_tb ();
   logic [15:0]  data_in = '0    ;
   logic         data_we = '0    ;
 
-  fpga_4lut 4lut(
+  fpga_4lut lut(
     .reset_ni   (reset_n  ),
     .data_in_i  (data_in  ),
     .data_we_i  (data_we  ),

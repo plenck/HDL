@@ -2,13 +2,16 @@
 module carry_logic_tb ();
   logic i0;
   logic i1;
-  logic ci;
+  logic fcin;
+  logic reset_n;
+  logic fcout;
 
   fpga_carry_logic carry_logic (
-    .carry_in_i(ci),
-    .carry_out_o(),
+    .fcin_i(ci),
+    .fcout_o(),
     .i0_i(i0),
-    .i1_i(i1)
+    .i1_i(i1),
+    .reset_ni(reset_n)
   );
 
   logic [4:0] c_tot   = 0;
@@ -17,12 +20,12 @@ module carry_logic_tb ();
 
   task xpect( input logic expected );
     c_tot += 1;
-    if (carry_out_o == expected) begin
+    if (fcout == expected) begin
       c_ok += 1;
-      $display ("test vector %b PASSED ", {i0, i1, ci} );
+      $display ("test vector %b PASSED ", {i0, i1, fcin} );
     end else begin
       c_fail += 1;
-      $display ("test vector %b FAILED",  {i0, i1, ci} );
+      $display ("test vector %b FAILED",  {i0, i1, fcin} );
     end
   endtask : xpect
 
@@ -31,17 +34,19 @@ module carry_logic_tb ();
   ////////////////
 
   initial begin
-    #10 {i0, i1, ci} = 3'b000;  #5 xpect(1'b0);
-    #5  {i0, i1, ci} = 3'b001;  #5 xpect(1'b0);
+        reset_n      = '0    ;  
+    #10 reset_n      = 1'b1  ;
+    #10 {i0, i1, fcin} = 3'b000;  #5 xpect(1'b0);
+    #5  {i0, i1, fcin} = 3'b001;  #5 xpect(1'b0);
 
-    #5  {i0, i1, ci} = 3'b010;  #5 xpect(1'b0);
-    #5  {i0, i1, ci} = 3'b011;  #5 xpect(1'b1);
+    #5  {i0, i1, fcin} = 3'b010;  #5 xpect(1'b0);
+    #5  {i0, i1, fcin} = 3'b011;  #5 xpect(1'b1);
 
-    #5  {i0, i1, ci} = 3'b100;  #5 xpect(1'b0);
-    #5  {i0, i1, ci} = 3'b101;  #5 xpect(1'b1);
+    #5  {i0, i1, fcin} = 3'b100;  #5 xpect(1'b0);
+    #5  {i0, i1, fcin} = 3'b101;  #5 xpect(1'b1);
 
-    #5  {i0, i1, ci} = 3'b110;  #5 xpect(1'b1);
-    #5  {i0, i1, ci} = 3'b111;  #5 xpect(1'b1);
+    #5  {i0, i1, fcin} = 3'b110;  #5 xpect(1'b1);
+    #5  {i0, i1, fcin} = 3'b111;  #5 xpect(1'b1);
 
     if (c_fail !== 0) begin
       $display( "\n%d VECTORS OUT OF %d FAILED", c_fail, c_tot);

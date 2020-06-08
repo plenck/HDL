@@ -12,7 +12,7 @@ module fpga_dffer (
   input  logic D_i          //Data
   );
 
-  always_ff (posedge (clk_i) or negedge(reset_ni)) begin
+  always_ff @(posedge(clk_i) or negedge(reset_ni) ) begin
     if (!reset_ni) begin
       Q_o <= '0;
     end else begin
@@ -23,4 +23,5 @@ module fpga_dffer (
         default:;
       endcase
     end
+  end
 endmodule

@@ -1,7 +1,7 @@
 //timothee kocev
 module tb_dffer ();
 
-  logic Q_o, E_i, D_i;
+  logic Q_o, E_i, D_i, reset_n;
 
   //define clock
   logic clk = 1'b1;
@@ -21,7 +21,11 @@ module tb_dffer ();
   /////////////////////
 
   //counters
-  logic [4:0] c_tot, [4:0] c_fail, [4:0] c_ok;
+  logic [4:0] c_tot    ; 
+  logic [4:0] c_fail   ; 
+  logic [4:0] c_ok     ; 
+
+  logic       expected ;
 
   task xpect(input logic Q_o) ;
     if (Q_o == expected) begin
@@ -36,11 +40,11 @@ module tb_dffer ();
   initial begin
         reset_n   = 0;
     #12 reset_n   = 1;
-    #3  {reset_n, E_i, D_i} = 3'b111; #10 xpect(1)
-    #10 {reset_n, E_i, D_i} = 3'b110; #10 xpect(0)
-    #10 {reset_n, E_i, D_i} = 3'b101; #10 xpect(0)
-    #10 {reset_n, E_i, D_i} = 3'b111; #10 xpect(1)
-    #10 {reset_n, E_i, D_i} = 3'b101; #10 xpect(0)
+    #3  {reset_n, E_i, D_i} = 3'b111; #10 xpect(1);
+    #10 {reset_n, E_i, D_i} = 3'b110; #10 xpect(0);
+    #10 {reset_n, E_i, D_i} = 3'b101; #10 xpect(0);
+    #10 {reset_n, E_i, D_i} = 3'b111; #10 xpect(1);
+    #10 {reset_n, E_i, D_i} = 3'b101; #10 xpect(0);
 
     if (c_fail !== 0) begin
       $display( "\n%d VECTORS OUT OF %d FAILED", c_fail, c_tot);
