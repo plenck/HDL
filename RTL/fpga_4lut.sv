@@ -1,13 +1,11 @@
 //written by timothee kocev
 
 module fpga_4lut (
-  input   logic [15:0]  data_in_i,
-  input   logic         data_we_i,
-  input   logic [3:0]   in_i,
+  input   logic [15:0]  config_i,
+  input   logic         config_we_i,
+  input   logic [3:0]   lut_i,
 
-  input   logic         reset_ni,
-
-  output  logic         out_o
+  output  logic         lut_o
   );
 
   logic [15:0]    data;
@@ -16,13 +14,10 @@ module fpga_4lut (
   //4 LUT //
   //////////
   always_comb begin
-    if (!reset_ni) begin
-      data = '0;
-    end else if (data_we_i) begin
-      data = data_in_i;
-    end else begin
-      out_o = data[in_i];
+    if (config_we_i == 1'b1) begin
+      data = config_i;
     end
+    lut_o = data[lut_i];
   end
 
 endmodule
