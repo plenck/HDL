@@ -30,13 +30,15 @@ module fpga_logic_cell (
     .fcout_o  (fcout_o    )
   );
 
-  logic i3;
+  wire [3:0] lut_in;
   //mux carry_logic
   always_comb begin
+    lut_in[0] = lut_i[0];
+    lut_in[1] = lut_i[1];
+    lut_in[2] = lut_i[2];
     unique case (mux_carry_i )
-      1'b0 : i3  = lut_i[3] ;
-      1'b1 : i3  = fcin_i   ;
-      default:;
+      1'b0 : lut_in[3] = lut_i[3];
+      1'b1 : lut_in[3] = fcin_i   ;
     endcase
   end
 
@@ -49,7 +51,7 @@ module fpga_logic_cell (
   fpga_4lut lut (
     .config_i     (config_lut_i     ),
     .config_we_i  (config_lut_we_i  ),
-    .lut_i        (lut_i            ),
+    .lut_i        (lut_in            ),
     .lut_o        (lut_o            )
   );
 
@@ -71,7 +73,6 @@ module fpga_logic_cell (
     unique case (mux_sync_i)
       1'b0 : logic_cell_o = Q_o;
       1'b1 : logic_cell_o = lut_o;
-      default : ;
     endcase
   end
 

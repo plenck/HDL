@@ -16,7 +16,6 @@ module fpga_carry_logic (
         3'bx00 : fcout_o = '0   ;
         3'b1x1 : fcout_o = 1'b1 ;
         3'b11x : fcout_o = 1'b1 ;
-        default:;
       endcase
   end
 
