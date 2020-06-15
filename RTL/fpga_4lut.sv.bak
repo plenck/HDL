@@ -23,22 +23,22 @@ module fpga_4lut (
 
   always_comb begin
     unique case ({i0_i, i1_i, i2_i, i3_i})
-      4'h0 : lut_o = data[0];
-      4'h1 : lut_o = data[1];
-      4'h2 : lut_o = data[2];
-      4'h3 : lut_o = data[3];
-      4'h4 : lut_o = data[4];
-      4'h5 : lut_o = data[5];
-      4'h6 : lut_o = data[6];
-      4'h7 : lut_o = data[7];
-      4'h8 : lut_o = data[8];
-      4'h9 : lut_o = data[9];
-      4'hA : lut_o = data[10];
-      4'hB : lut_o = data[11];
-      4'hC : lut_o = data[12];
-      4'hD : lut_o = data[13];
-      4'hE : lut_o = data[14];
-      4'hF : lut_o = data[15];
+      4'h0 : data[0];
+      4'h1 : data[1];
+      4'h2 : data[2];
+      4'h3 : data[3];
+      4'h4 : data[4];
+      4'h5 : data[5];
+      4'h6 : data[6];
+      4'h7 : data[7];
+      4'h8 : data[8];
+      4'h9 : data[9];
+      4'hA : data[10];
+      4'hB : data[11];
+      4'hC : data[12];
+      4'hD : data[13];
+      4'hE : data[14];
+      4'hF : data[15];
     endcase
   end
 
